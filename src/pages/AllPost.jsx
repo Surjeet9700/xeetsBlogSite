@@ -3,22 +3,24 @@ import authservice from "../appwrite/conf";
 import { Container, PostCard } from "../components";
 
 function AllPost() {
-  const [posts, setPost] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-  useEffect(() => {}, []);
-
-  authservice.getPost([]).then((posts) => {
-    if (posts) {
-      setPost(posts.documents);
-    }
-  });
+  useEffect(() => {
+    authservice.getPost([]).then((posts) => {
+      if (posts) {
+        setPosts(posts.documents);
+      }
+    }).catch(error=>{
+      console.error('Error while fetching post', error)
+    })
+  }, []);
 
   return (
     <div className="w-full py-8">
       <Container>
-        <div className="flex flex-wrap">
-          {posts.map((post) => (
-            <div key={post.$id} className="p-2 w-1/4">
+        <div className="grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 gap-4">  
+          {posts && posts.map((post) => (
+            <div key={post.$id} className="p-2 rounded-md shadow-sm"> 
               <PostCard {...post} />
             </div>
           ))}
@@ -26,5 +28,7 @@ function AllPost() {
       </Container>
     </div>
   );
+  
 }
+
 export default AllPost;

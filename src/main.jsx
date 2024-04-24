@@ -12,6 +12,7 @@ import AddPost from "./pages/AddPost.jsx";
 import EditPost from './pages/EditPost.jsx'
 import Post from './pages/Posts.jsx'
 import Contact from "./pages/Contant.jsx";
+import HomeForNotLoggedUser from "./pages/HomeForNotLoggedUser.jsx";
 
 
 const router = createBrowserRouter([
@@ -74,6 +75,7 @@ const router = createBrowserRouter([
         path: "/contact",
         element:<Contact/>
       }
+      
     ],
   },
 ]);

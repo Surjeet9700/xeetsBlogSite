@@ -9,16 +9,19 @@ import Logo from './Logo'
 import { Link } from 'react-router-dom'
 import Input from './Input'
 import Button from './Button'
+import Loader from './Loader/Loader'
 
 function Signup() {
     const navigate = useNavigate()
     const [error, setError] = useState("")
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm()
+    const [loading, setLoading] = useState(false)
 
 
     const create = async(data) => {
         setError("")
+        setLoading(true)
         try {
             const userData = await authservice.createAccount(data)
             if(userData){
@@ -31,6 +34,7 @@ function Signup() {
         } catch (error) {
             setError(error.message)
         }
+        setLoading(false)
     }
 
   return (

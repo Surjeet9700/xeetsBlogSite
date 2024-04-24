@@ -5,9 +5,11 @@ import {login, logout} from "./store/authSlice"
 import './App.css'
 import { Footer, Header } from './components/index'
 import { Outlet } from 'react-router-dom'
+import Logoutbtn from './components/index'
 
 function App() {
   const [loading, setLoading] = useState(true)
+  const [posts, setPosts] = useState([]);
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -25,6 +27,7 @@ function App() {
   return !loading ? (
     <div>
     <Header/>
+    <Logoutbtn setPosts={setPosts}/>
     <main>
       <Outlet/>
     </main>

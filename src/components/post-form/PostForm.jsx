@@ -5,7 +5,8 @@ import authservice from '../../appwrite/conf'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-
+import { useState } from 'react'
+import Loader from '../Loader/Loader'
 
 export default function PostForm({post}) {
 
@@ -14,7 +15,8 @@ export default function PostForm({post}) {
       title: post?.title || "" ,
       slug: post?.$id || "",
       content: post?.content || "",
-      status: post?.status || "active"
+      status: post?.status || "active",
+      featuredImage: post?.featuredImage || null,
 
     },
   });
@@ -23,9 +25,10 @@ export default function PostForm({post}) {
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
-
+  const [loading, setLoading] = useState(false)
 
   const submit = async (data) => {
+    setLoading(true)
     if(post) {
       const file = data.image[0] ? await authservice.uploadFile(data.image[0]) : null
 
@@ -63,6 +66,7 @@ export default function PostForm({post}) {
         }
       }
     }
+    setLoading(false)
 
   }
 
@@ -89,6 +93,8 @@ export default function PostForm({post}) {
       subscription.unsubscribe();
     }
   },[watch, slugTransform, setValue]);
+
+
 
 
   return (
@@ -134,7 +140,10 @@ export default function PostForm({post}) {
             className="mb-4"
             {...register("status", { required: true })}
         />
-        <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
+        <Button type="submit" 
+        className="w-full"
+        bgColor={post ? "bg-green-500" : undefined}
+          >
             {post ? "Update" : "Submit"}
         </Button>
     </div>

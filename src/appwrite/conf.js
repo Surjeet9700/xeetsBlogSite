@@ -1,5 +1,6 @@
 import config from "../config/config";
 import { Client, ID, Databases, Storage, Query } from "appwrite";
+import authservices from "./auth";
 
 
 export class Service{
@@ -35,6 +36,25 @@ export class Service{
 
         }
     }
+
+    // async getPostsByUser(userId) {
+    //     console.log("UserID from the getPostByUser", userId)
+    //     try {
+    //         const response = await this.databases.listDocuments(
+    //             config.appwriteDatabaseId,
+    //             config.appwriteCollectionId,
+    //             Query.equal[('userId', userId)]
+    //         );
+    //         const documentsAsObject = response.documents.reduce((acc, doc) => {
+    //             acc[doc.$id] = doc;
+    //             return acc;
+    //         }, {});
+    //         return documentsAsObject;
+    //     } catch (error) {
+    //         console.error(error);
+    //         return null;
+    //     }
+    // }
 
     async updatePost (slug, {title, content, featuredImage, status}){
         try {
@@ -93,15 +113,27 @@ export class Service{
             return await this.databases.listDocuments(
                 config.appwriteDatabaseId,
                 config.appwriteCollectionId,
-             
-
             )
         } catch (error) {
-            console.log("appwrite service :: getPosts :: error", error)
+            console.log("Appwrite serive :: getPosts :: error", error);
             return false
-
         }
     }
+
+   
+
+
+    // async getPosts(queries = [Query.equal("status", "active")]) {
+    //     try {
+    //         return await this.databases.listDocuments(
+    //             config.appwriteDatabaseId, 
+    //             config.appwriteCollectionId,  
+    //             queries,)
+    //     } catch (error) {
+    //         console.log("Appwrite service :: getPosts :: error", error);
+    //         return false
+    //     }
+    // }
 
     //files upload service
 

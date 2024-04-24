@@ -47,20 +47,16 @@ export class AuthService {
         }
       }
     
-    async getCurrentUser() {
+      async getCurrentUser() {
         try {
-            const session = await this.account.getSession('current'); // Get the current session
-            if (session) {
-                return await this.account.get(); // Get the current user's account information
-            } else {
-                throw new Error('User is not logged in or session has expired.');
-            }
+            return await this.account.get()
         } catch (error) {
-            console.log("appwrite service :: getCurrentUser :: error", error);
-            // Handle the error, e.g., prompt the user to log in
-            return null;
+            console.log("Appwrite service :: getCurrentUser :: error", error);
         }
+
+        return null;
     }
+
     
     async logout(){
         try {

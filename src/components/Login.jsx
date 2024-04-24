@@ -5,17 +5,20 @@ import Button from "./Button.jsx";
 import Input from "./Input.jsx";
 import { useDispatch } from "react-redux";
 import authservice from "../appwrite/auth.js";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import Logo from "./Logo.jsx";
+import Loader from "./Loader/Loader.jsx";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const login = async (data) => {
     setError("");
+    setLoading(true);
     try {
       const session = await authservice.login(data);
       if (session) {
@@ -26,6 +29,7 @@ function Login() {
     } catch (error) {
       setError(error.message);
     }
+    setLoading(false);
   };
   return (
     <div className="flex items-center justify-center w-full">
@@ -75,6 +79,7 @@ function Login() {
                 className="w-full">
                     Sign In 
                 </Button>
+                <Loader visible={loading} />
             </div>
         </form>
       </div>
